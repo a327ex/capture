@@ -1,14 +1,19 @@
 --[[
-  boot.lua — ONE-TIME WORK: the layers, the binds, and the state main.lua's
-  definitions read and write. main.lua names this file in its init table
-  (`boot = {'boot.lua'}`) and requires it as its last line, so it runs once
-  and NEVER reloads: saving any other file re-runs its definitions in the
-  globals while everything created here survives.
+  boot.lua — ONE-TIME WORK. Layers, fonts, binds, and the state main.lua's
+  definitions read and write. Never reloads.
 ]]
 
-game_layer = layer_new('game')
+game = layer_new('game')
+ui = layer_new('ui')
 
+font_register('big', 'assets/monogram.ttf', 72, 'rough')
+font_register('mid', 'assets/monogram.ttf', 40, 'rough')
+font_register('small', 'assets/monogram.ttf', 22, 'rough')
+
+bind('capture', 'mouse:1')
+bind('reset', 'key:r')
 bind('quit', 'key:escape')
 
--- state the definition files read and write
-box_x = 0
+rng = random_create(os.time())
+
+world_reset()
