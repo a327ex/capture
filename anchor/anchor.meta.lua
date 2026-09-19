@@ -54,12 +54,14 @@ function images_dirty() end
 ---@return any
 function web_file_status(path) end
 
---- texture userdata pixel_data_string is a binary string of width*height*4 bytes (RGBA)
----@param width number
----@param height number
----@param pixel_data_string any
----@return any
-function texture_create(width, height, pixel_data_string) end
+--- pixels are width*height*4 RGBA bytes; filter 'smooth' = linear (default nearest), wrap 'repeat' = tiling
+---@param width integer
+---@param height integer
+---@param pixel_data_string string
+---@param filter? string
+---@param wrap? string
+---@return lightuserdata
+function texture_create(width, height, pixel_data_string, filter, wrap) end
 
 --- free a texture
 ---@param tex lightuserdata|table
@@ -398,10 +400,10 @@ function set_draw_shader(path) end
 ---@return any ...
 function get_draw_shader(...) end
 
---- UNDOCUMENTED (no doc comment in anchor.c yet)
----@param ... any
----@return any ...
-function shader_load_file(...) end
+--- compile an effect (post-process) shader from a file; errors on failure
+---@param path string
+---@return integer
+function shader_load_file(path) end
 
 --- compile an effect (post-process) shader from source; errors on failure; headless returns 1
 ---@param source string
@@ -2156,16 +2158,4 @@ function process_poll(id) end
 --- SIGTERM the process group (posix_spawn used SETSID).
 ---@param id any
 function process_kill(id) end
-
---- .. ; a load or run error propagates, as the stock one's does
----@param path string
----@return any
-function dofile(path) end
-
---- chunk | nil, message
----@param path string
----@param mode? string
----@param env? any
----@return any
-function loadfile(path, mode, env) end
 
